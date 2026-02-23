@@ -136,3 +136,5 @@ if [[ "$STATUS1" != "active" || "$STATUS2" != "active" ]]; then
 fi
 
 echo "Deployment completed successfully."
+
+exec > deploy_$(date +%Y%m%d).log 2>&1
