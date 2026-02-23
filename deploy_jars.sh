@@ -8,9 +8,9 @@ set -euo pipefail
 SRC_SHARE="//epsw/VistaPrd/epms/jars"
 SRC_MOUNT="/mnt/src_jars"
 
-# CSP Share (Existing JARs)
-CSP_SHARE="//ep0/apps/ep/java/jars/test/csp"
-CSP_MOUNT="/mnt/csp_jars"
+# ep0 Share (Existing JARs)
+ep0_SHARE="//ep0/apps/ep/java/jars/test/csp"
+ep0_MOUNT="/mnt/csp_jars"
 
 # Local PROD location
 PROD_TARGET="/epps/bin/prod/jars"
@@ -36,7 +36,7 @@ error_exit() {
 
 cleanup() {
     mount | grep -q "$SRC_MOUNT" && umount "$SRC_MOUNT"
-    mount | grep -q "$CSP_MOUNT" && umount "$CSP_MOUNT"
+    mount | grep -q "$ep0_MOUNT" && umount "$ep0_MOUNT"
     echo "Shares unmounted."
 }
 
@@ -47,7 +47,7 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-mkdir -p "$SRC_MOUNT" "$CSP_MOUNT" "$PROD_ARCHIVE"
+mkdir -p "$SRC_MOUNT" "$ep0_MOUNT" "$PROD_ARCHIVE"
 
 # ================= MOUNT SHARES =================
 
@@ -56,10 +56,10 @@ mount -t cifs "$SRC_SHARE" "$SRC_MOUNT" \
 -o rw,credentials=$CRED_FILE,uid=0,gid=100,dir_mode=0777,file_mode=0777,_netdev \
 || error_exit "Source mount failed"
 
-echo "Mounting CSP share..."
-mount -t cifs "$CSP_SHARE" "$CSP_MOUNT" \
+echo "Mounting ep0 share..."
+mount -t cifs "$ep0_SHARE" "$ep0_MOUNT" \
 -o rw,credentials=$CRED_FILE,uid=0,gid=100,dir_mode=0777,file_mode=0777,_netdev \
-|| error_exit "CSP mount failed"
+|| error_exit "ep0 mount failed"
 
 # ================= DEPLOY LOOP =================
 
@@ -73,14 +73,14 @@ do
         error_exit "$JAR not found in source share"
     fi
 
-    # ---- CSP SHARE BACKUP ----
-    if [ -f "$CSP_MOUNT/$JAR" ]; then
-        echo "Backing up from CSP share"
-        mv "$CSP_MOUNT/$JAR" "$CSP_MOUNT/archive/${JAR}.${DATE}"
+    # ---- ep0 SHARE BACKUP ----
+    if [ -f "$ep0_MOUNT/$JAR" ]; then
+        echo "Backing up from ep0 share"
+        mv "$ep0_MOUNT/$JAR" "$ep0_MOUNT/archive/${JAR}.${DATE}"
     fi
 
-    echo "Copying new JAR to CSP share"
-    cp "$SRC_MOUNT/$JAR" "$CSP_MOUNT/"
+    echo "Copying new JAR to ep0 share"
+    cp "$SRC_MOUNT/$JAR" "$ep0_MOUNT/"
 
     # ---- PROD BACKUP ----
     if [ -f "$PROD_TARGET/$JAR" ]; then
