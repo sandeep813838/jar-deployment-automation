@@ -138,3 +138,5 @@ fi
 echo "Deployment completed successfully."
 
 exec > deploy_$(date +%Y%m%d).log 2>&1
+
+#this script is now ready for the deployment 
