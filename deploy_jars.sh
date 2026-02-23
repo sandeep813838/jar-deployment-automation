@@ -19,8 +19,8 @@ PROD_ARCHIVE="$PROD_TARGET/archive"
 # Credentials file
 CRED_FILE="/etc/.creds1"
 
-SERVICE1="rmi-jisam@tax.service"
-SERVICE2="rmi-jisam@yearend.service"
+SERVICE1="rmi-jisam-2@tax.service"
+SERVICE2="rmi-jisam-2@yearend.service"
 
 DATE=$(date +%Y%m%d)
 DEPLOY_STATUS="SUCCESS"
