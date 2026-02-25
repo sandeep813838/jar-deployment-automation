@@ -17,7 +17,7 @@ PROD_TARGET="/epps/bin/prod/jars"
 PROD_ARCHIVE="$PROD_TARGET/archive"
 
 # Credentials file
-CRED_FILE="/etc/.creds1"
+CRED_FILE="/etc/.credsForEp0"
 
 SERVICE1="rmi-jisam-1@tax.service"
 SERVICE2="rmi-jisam-1@yearend.service"
