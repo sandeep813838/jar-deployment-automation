@@ -23,6 +23,7 @@ SERVICE1="rmi-jisam-1@tax.service"
 SERVICE2="rmi-jisam-1@yearend.service"
 SERVICE3="rmi-jisam-2@tax.service"
 SERVICE4="rmi-jisam-2@yearend.service"
+SERVICE3="rmi-jisam-2@tax.service 
 
 DATE=$(date +%Y%m%d)
 DEPLOY_STATUS="SUCCESS"
